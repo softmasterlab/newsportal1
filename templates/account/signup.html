@@ -19,7 +19,7 @@
             <p>
                 <label for="login">Логин:</label><br>
                 <input type="text" id="login" name="login" placeholder="Введите Ваш Логин" required>
-                <img src=""/>
+                <img id="login_img" width="24" src=""/>
                 <div id="login_err" class="err"></div>
             </p>
             <p>
@@ -89,9 +89,19 @@
             $('#login').blur(function () {
                 let login = $(this).val();
                 if (regExp1.test(login)) {
-                    $('#login_err').text('OK');
+                    // Проверка занятости логина:
+                    $.ajax({
+                        url:"add.php",
+                        data:"x=4&y=5",
+                        success:function(result) {
+                            $("#par1").html(result)
+                        }
+                    });
+
+                    $('#login_img').attr('src', '../../static/img/ok.png');
+                    $('#login_err').text('');
                 } else {
-                    //$(this).css('border-color', 'red');
+                    $('#login_img').attr('src', '../../static/img/cross.png');
                     $('#login_err').text('Логин должен состоять из букв или цифр (6-16) +(_/-)!');
                 }
             });
