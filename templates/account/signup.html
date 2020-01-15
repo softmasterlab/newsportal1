@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    NewsPortal - Регистрация
+{% endblock title %}
+
+
+{% block header %}
+    Страница регистрации
+{% endblock header %}
+
+
+{% block content %}
+    <div id="main_box" class="container">
+        <h3>Регистрация</h3>
+        <form id="form1" method="post" action="/account/signup">
+            {% csrf_token %}
+            <p>
+                <label for="login">Логин:</label><br>
+                <input type="text" id="login" name="login" placeholder="Введите Ваш Логин" required>
+                <img src=""/>
+                <div id="login_err" class="err"></div>
+            </p>
+            <p>
+                <label for="pass1">Пароль:</label><br>
+                <input type="password" id="pass1" name="pass1" placeholder="Введите Ваш Пароль" required>
+                <div id="pass1_err" class="err"></div>
+            </p>
+            <p>
+                <label for="pass2">Повтор:</label><br>
+                <input type="password" id="pass2" name="pass2" placeholder="Введите Пароль еще раз" required>
+                <div id="pass2_err" class="err"></div>
+            </p>
+            <p>
+                <label for="email">E-Mail:</label><br>
+                <input type="email" id="email" name="email" placeholder="Введите Вашу почту" required>
+                <div id="email_err" class="err"></div>
+            </p>
+            <p style="text-align: center">
+                <input type="submit" value="Отправить" class="btn btn-success">
+                <input type="reset" value="Очистить" class="btn btn-success">
+            </p>
+        </form>
+        <hr class="my_row">
+    </div>
+    <style>
+        #main_box {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .my_row {
+            border-color: gray;
+            margin-top: 35px;
+        }
+        #form1 {
+            border: 1px solid silver;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin: 20px auto;
+            width: 350px;
+            text-align: left;
+            background-color: whitesmoke;
+            box-shadow: 0 0 silver, 0px 15px 40px silver;
+        }
+        #form1 input {
+            width: 90%;
+        }
+        #form1 input[type="submit"], #form1 input[type="reset"] {
+            width: 45%;
+            margin-top: 25px;
+        }
+        .err {
+            color: red;
+            margin-top: -10px;
+        }
+        img {
+            width: 24px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            let valid = true;
+            let regExp1 = /^[a-zA-Z][a-zA-Z0-9_\-]{5,15}$/;
+            //let regExp2 = //;
+            //let regExp3 = //;
+
+            $('#login').blur(function () {
+                let login = $(this).val();
+                if (regExp1.test(login)) {
+                    $('#login_err').text('OK');
+                } else {
+                    //$(this).css('border-color', 'red');
+                    $('#login_err').text('Логин должен состоять из букв или цифр (6-16) +(_/-)!');
+                }
+            });
+
+            $('#login').focus(function () {
+                //$(this).css('border-width', '0px');
+                $('#login_err').text('');
+            });
+
+        });
+    </script>
+{% endblock content %}

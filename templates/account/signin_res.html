@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    NewsPortal - Отчет об авторизации
+{% endblock title %}
+
+
+{% block header %}
+    Страница отчета об авторизации
+{% endblock header %}
+
+
+{% block content %}
+    <div id="main_box" class="container">
+        <h3>Отчет об авторизации</h3>
+        <h4 style="color: {{ x_color }}">{{ report }}</h4>
+        <hr class="my_row">
+    </div>
+    <style>
+        #main_box {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .my_row {
+            border-color: gray;
+            margin-top: 25px;
+        }
+    </style>
+{% endblock content %}
