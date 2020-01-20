@@ -83,23 +83,27 @@
 
             let valid = true;
             let regExp1 = /^[a-zA-Z][a-zA-Z0-9_\-]{5,15}$/;
-            //let regExp2 = //;
+            let regExp2 = //;
             //let regExp3 = //;
 
             $('#login').blur(function () {
                 let login = $(this).val();
+                // Проверка регулярки:
                 if (regExp1.test(login)) {
                     // Проверка занятости логина:
                     $.ajax({
                         url:"/account/ajax_reg",
                         data:"login=" + login,
                         success:function(result) {
-                            $("#login_err").html(result.login);
+                            if (result.mess == 'занят') {
+                                $('#login_img').attr('src', '../../static/img/cross.png');
+                                $('#login_err').text('Логин занят!');
+                            } else {
+                                $('#login_img').attr('src', '../../static/img/ok.png');
+                                $('#login_err').text('');
+                            }
                         }
                     });
-
-                    $('#login_img').attr('src', '../../static/img/ok.png');
-                    //$('#login_err').text('');
                 } else {
                     $('#login_img').attr('src', '../../static/img/cross.png');
                     $('#login_err').text('Логин должен состоять из букв или цифр (6-16) +(_/-)!');
