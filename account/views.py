@@ -2,8 +2,11 @@ from django.shortcuts import render
 from hashlib import md5
 from datetime import datetime
 from .models import User
+from django.http import JsonResponse
 
 data = dict()
+
+
 def get_user(request):
     global data
     if 'user' in request.session:
@@ -11,6 +14,7 @@ def get_user(request):
     else:
         user = 'Гость'
     data['user'] = user
+
 
 def signup(request):
     global data
@@ -69,13 +73,13 @@ def signup(request):
         # Отправка данных на страницу отчета:
         return render(request, 'account/signup_res.html', context=data)
 
+
 def signin(request):
     global data
     get_user(request)
     if request.method == 'GET':
         return render(request, 'account/signin.html', context=data)
     elif request.method == 'POST':
-        # data = dict()
         # Извлечение данных:
         _login = request.POST.get('login')
         _pass1 = request.POST.get('pass1')
@@ -102,5 +106,14 @@ def signin(request):
         # Загрузка страницы отчета:
         return render(request, 'account/signin_res.html', context=data)
 
+
 def signout(request):
     return render(request, 'account/signout.html')
+
+
+def ajax_reg(request):
+    response = dict()
+    login = request.GET.get('login')
+    response['mess'] = 'AJAX-OK'
+    response['login'] = login
+    return JsonResponse(response)
