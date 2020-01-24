@@ -38,17 +38,14 @@
 
             // Ввод 1 пароля:
             $('#pass1').blur(function () {
-
             });
 
             // Ввод 2 пароля:
             $('#pass2').blur(function () {
-
             });
 
             // Ввод E-Mail:
             $('#email').blur(function () {
-
             });
 
             // Исправление данных:
@@ -67,6 +64,17 @@
 
             $('#email').focus(function () {
                 $('#email_err').text('');
+            });
+
+            // Код проверки результатов валидации:
+            // -----------------------------------
+            $('#submit').click(function () {
+                alert(1);
+                if (valid == true) {
+                    $('#form1').attr('onsubmit', 'return true'); // - разблокировать отправку данных на сервер
+                } else {
+                    $('#form1').attr('onsubmit', 'return false'); // - заблокировать отправку данных на сервер
+                }
             });
 
         });
