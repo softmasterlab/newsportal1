@@ -14,9 +14,36 @@
 {% block content %}
     <div id="main_box" class="container">
         <h3>Добавление новости</h3>
+        <div style="text-align: left">
+            <form id="form3" method="post" action="/news/create" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            <div>{{ field }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <p style="margin-top: 20px">
+                    <input id="b1" type="submit" value="Отправить" class="btn btn-success">
+                    <input id="b2" type="reset" value="Очистить" class="btn btn-success">
+                </p>
+            </form>
+        </div>
         <hr class="my_row">
     </div>
     <style>
+        .form-group input {
+            width: 50%;
+            height: 30px;
+        }
+        .form-group textarea {
+            width: 50%;
+        }
+        #b1, #b2 {
+            width: 150px;
+        }
         #main_box {
             margin-top: 30px;
             text-align: center;

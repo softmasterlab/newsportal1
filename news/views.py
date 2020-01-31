@@ -1,44 +1,40 @@
-from django.shortcuts import render
-
-data = dict()
-
-
-def get_user(request):
-    global data
-    if 'user' in request.session:
-        user = request.session['user']
-        link1 = 'Выход'
-        link2 = 'Профиль'
-    else:
-        user = 'Гость'
-        link1 = 'Вход'
-        link2 = 'Регистрация'
-    data['user'] = user
-    data['link1'] = link1
-    data['link2'] = link2
+from mylib.helpers import get_user
+from django.shortcuts import render, redirect
+from .forms import PostForm
+from .models import Post
 
 
 def index(request):
-    get_user(request)
+    data = get_user(request)
+    posts = Post.objects.all()
+    data['posts'] = posts
     return render(request, 'news/index.html', context=data)
 
 
-def delete(request):
-    get_user(request)
-    return render(request, 'news/delete.html', context=data)
+def create(request):
+    data = get_user(request)
+    if request.method == 'GET':
+        data['form'] = PostForm()
+        return render(request, 'news/create.html', context=data)
+    elif request.method == 'POST':
+        fill_form = PostForm(request.POST, request.FILES)
+        fill_form.save()
+        return redirect('/news')
 
 
-def details(request):
-    get_user(request)
+def details(request, post_id):
+    data = get_user(request)
+    data['post'] = Post.objects.get(id=post_id)
     return render(request, 'news/details.html', context=data)
 
 
-def edit(request):
-    get_user(request)
+def edit(request, post_id):
+    data = get_user(request)
+    data['post'] = Post.objects.get(id=post_id)
     return render(request, 'news/edit.html', context=data)
 
 
-def create(request):
-    get_user(request)
-    return render(request, 'news/create.html', context=data)
-
+def delete(request, post_id):
+    data = get_user(request)
+    data['post'] = Post.objects.get(id=post_id)
+    return render(request, 'news/delete.html', context=data)
