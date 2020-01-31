@@ -15,9 +15,41 @@
     <div id="main_box" class="container">
         <h3>Новости</h3>
         <hr class="my_row">
-        {% if user == 'student1' %}
+        {% if user == 'moderator1' %}
             <a href="/news/create">Добавить новость</a>
         {% endif %}
+        <table class="news" border="1">
+            <tr>
+                <th>Picture</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publish</th>
+                <th>Source</th>
+                <th>Manage</th>
+            </tr>
+            {% for post in posts %}
+                <tr>
+                    <td>
+                        <img src="/media/{{ post.picture }}" width="100" height="60">
+                    </td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.author }}</td>
+                    <td>{{ post.publish }}</td>
+                    <td>
+                        <a href="{{ post.source }}">{{ post.source }}</a>
+                    </td>
+                    <td>
+                        |
+                        <a href="/news/details/{{ post.id }}">Details</a>
+                        |
+                        <a href="/news/edit/{{ post.id }}">Edit</a>
+                        |
+                        <a href="/news/delete/{{ post.id }}">Delete</a>
+                        |
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
         <hr class="my_row">
     </div>
     <style>
@@ -28,6 +60,12 @@
         .my_row {
             border-color: gray;
             margin-top: 25px;
+        }
+        .news {
+            width: 100%;
+        }
+        .news th, .news td {
+            padding: 5px 10px;
         }
     </style>
 {% endblock content %}
